@@ -47,7 +47,7 @@ def inspect_pcb(inspected_bytes, reference_bytes=None):
 
     for idx, c in enumerate(contours):
         area = cv2.contourArea(c)
-        if area < 15 or area > 5000:
+        if area < 150 or area > 5000:
             continue  # Filter background noise and oversized borders
 
         x, y, w, h = cv2.boundingRect(c)
@@ -80,7 +80,7 @@ def inspect_pcb(inspected_bytes, reference_bytes=None):
 
     # Calculate Quality Score
     total_penalty = sum(d["severity_weight"] for d in defects_detected)
-    quality_score = max(0.0, min(100.0, 100.0 - total_penalty))
+    quality_score = max(0.0, min(100.0, 100.0 - (total_penalty * 0.15)))
     
     if quality_score >= 90:
         status = "PASSED - Grade A"
