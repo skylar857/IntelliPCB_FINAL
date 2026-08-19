@@ -32,10 +32,10 @@ def inspect_pcb(inspected_bytes, reference_bytes=None):
 
     # Compute Structural Similarity Index (SSIM) matrix
     score_ssim, diff = ssim(gray_ref, gray_insp, full=True)
-    diff = (diff * 255).astype("np.uint8" if hasattr(np, "uint8") else np.uint8)
+    diff = (diff * 255).astype(np.uint8)
 
     # Threshold the difference to isolate discrepancies (defects)
-    thresh = cv2.threshold(diff, 180, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
+    thresh = cv2.threshold(diff, 180, 255, cv2.THRESH_BINARY_INV)[1]
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
     thresh = cv2.dilate(thresh, kernel, iterations=2)
 
